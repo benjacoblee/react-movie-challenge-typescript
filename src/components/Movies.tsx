@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { movie as MovieType } from "../types/movie";
 import { fetchMovies } from "../utils";
 import Movie from "./Movie";
 
-const Movies: React.FC<{}> = () => {
+interface MoviesProps {}
+
+const Movies: React.FC<MoviesProps> = () => {
     const [movies, setMovies] = useState<MovieType[]>([]);
     const [errors, setErrors] = useState<string>("");
 

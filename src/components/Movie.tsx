@@ -1,8 +1,8 @@
 import React from "react";
-import { movie as MovieProps } from "../types/movie";
+import { MovieType } from "../types/Movie";
 import { Link } from "react-router-dom";
 
-const Movie: React.FC<MovieProps> = ({
+const Movie: React.FC<MovieType> = ({
     genre,
     name,
     productionYear,

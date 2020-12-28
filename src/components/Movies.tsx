@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import queryString from "query-string";
-import { movie as MovieType } from "../types/movie";
+import { MovieType } from "../types/Movie";
 import { fetchMovies } from "../utils";
 import Movie from "./Movie";
+import { useLocation } from "react-router-dom";
 
 interface MoviesProps {
-    location: {
-        search: string;
-    };
+    setFetchedMovies: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Movies: React.FC<MoviesProps> = ({ location }) => {
+const Movies: React.FC<MoviesProps> = ({ setFetchedMovies }) => {
     const [movies, setMovies] = useState<MovieType[]>([]);
     const [errors, setErrors] = useState<string>("");
+
+    const location = useLocation();
 
     const query: {
         genre?: string;
@@ -22,25 +23,40 @@ const Movies: React.FC<MoviesProps> = ({ location }) => {
     useEffect(() => {
         setMovies([]);
         if (Object.keys(query).length > 0) {
-            fetchMovies().then((moviesData) => {
-                query.genre
-                    ? setMovies(
-                          moviesData.filter(
-                              (movie) => movie.genre === query.genre
-                          )
-                      )
-                    : setMovies(
-                          moviesData.filter(
-                              (movie) =>
-                                  movie.productionYear ===
-                                  parseInt(query.productionYear!)
-                          )
-                      );
-            });
+            fetchMovies()
+                .then((moviesData) => {
+                    if (query.genre) {
+                        setMovies(
+                            moviesData.filter(
+                                (movie) => movie.genre === query.genre
+                            )
+                        );
+                        setFetchedMovies(true);
+                    } else {
+                        setMovies(
+                            moviesData.filter(
+                                (movie) =>
+                                    movie.productionYear ===
+                                    parseInt(query.productionYear!)
+                            )
+                        );
+                        setFetchedMovies(true);
+                    }
+                })
+                .catch((err) => {
+                    setErrors(err.toString());
+                    setFetchedMovies(false);
+                });
         } else {
             fetchMovies()
-                .then((moviesData) => setMovies(moviesData))
-                .catch((err) => setErrors(err.toString()));
+                .then((moviesData) => {
+                    setMovies(moviesData);
+                    setFetchedMovies(true);
+                })
+                .catch((err) => {
+                    setErrors(err.toString());
+                    setFetchedMovies(false);
+                });
         }
         // eslint-disable-next-line
     }, [location]);

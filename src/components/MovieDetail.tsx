@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchMovies } from "../utils";
-import { movie as MovieType } from "../types/movie";
+import { MovieType } from "../types/Movie";
 
 type MovieDetailProps = {
     match: {

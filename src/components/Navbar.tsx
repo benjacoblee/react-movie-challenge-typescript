@@ -54,10 +54,10 @@ const Navbar: React.FC<NavbarProps> = ({ fetchedMovies }) => {
     }, []);
 
     return (
-        <div className="bg-green-400 p-5 mb-4">
+        <div className="bg-green-400 p-5">
             <nav className="flex justify-between items-center">
                 <div>
-                    <Link to="/" className="text-white font-semibold text-xl">
+                    <Link to="/" className="text-white font-light text-3xl">
                         Movies
                     </Link>
                 </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchMovies } from "../utils";
 import { MovieType } from "../types/Movie";
+import Alert from "./Alert";
 
 type MovieDetailProps = {
     match: {
@@ -44,7 +45,14 @@ const MovieDetail: React.FC<MovieDetailProps> = ({
     let body;
 
     if (!movie) {
-        body = <h1>Loading...</h1>;
+        body = (
+            <Alert
+                iconBackgroundColor="bg-blue-600"
+                backgroundColor="bg-blue-200"
+                color="text-blue-600"
+                text="Loading, please wait.."
+            />
+        );
     } else {
         const { name, productionYear, genre, synopsis } = movie;
         body = (
@@ -61,10 +69,17 @@ const MovieDetail: React.FC<MovieDetailProps> = ({
     }
 
     if (errors) {
-        body = <h1>{errors}</h1>;
+        body = (
+            <Alert
+                iconBackgroundColor="bg-red-600"
+                backgroundColor="bg-red-200"
+                color="text-red-600"
+                text={errors}
+            />
+        );
     }
 
-    return <div className="container mx-auto">{body}</div>;
+    return <div className={movie ? "container mx-auto" : ""}>{body}</div>;
 };
 
 export default MovieDetail;

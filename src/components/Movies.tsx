@@ -4,6 +4,7 @@ import { MovieType } from "../types/Movie";
 import { fetchMovies } from "../utils";
 import Movie from "./Movie";
 import { useLocation } from "react-router-dom";
+import Alert from "./Alert";
 
 interface MoviesProps {
     setFetchedMovies: React.Dispatch<React.SetStateAction<boolean>>;
@@ -64,7 +65,14 @@ const Movies: React.FC<MoviesProps> = ({ setFetchedMovies }) => {
     let body;
 
     if (!movies.length) {
-        body = <h1>Loading...</h1>;
+        body = (
+            <Alert
+                iconBackgroundColor="bg-blue-600"
+                backgroundColor="bg-blue-200"
+                color="text-blue-600"
+                text="Loading, please wait.."
+            />
+        );
     } else {
         body = (
             <div className="grid grid-cols-3 gap-4">
@@ -76,10 +84,21 @@ const Movies: React.FC<MoviesProps> = ({ setFetchedMovies }) => {
     }
 
     if (errors) {
-        body = <h1>{errors}</h1>;
+        body = (
+            <Alert
+                iconBackgroundColor="bg-red-600"
+                backgroundColor="bg-red-200"
+                color="text-red-600"
+                text={errors}
+            />
+        );
     }
 
-    return <div className="container mx-auto">{body}</div>;
+    return (
+        <div className={movies.length > 0 ? "container mx-auto mt-4" : ""}>
+            {body}
+        </div>
+    );
 };
 
 export default Movies;

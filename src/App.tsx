@@ -1,48 +1,16 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import Movie from "./components/Movie";
-import { movie as MovieType } from "./types/movie";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Movies from "./components/Movies";
 
 const App: React.FC<{}> = () => {
-    const [movies, setMovies] = useState<MovieType[]>([]);
-    const [errors, setErrors] = useState<string>("");
-
-    const fetchMovies = async () => {
-        try {
-            const res = await axios.get(
-                "https://sometimes-maybe-flaky-api.gdshive.io/"
-            );
-            const moviesData: MovieType[] = res.data;
-            setMovies(moviesData);
-        } catch (err) {
-            console.log(err);
-            setErrors(err.toString());
-        }
-    };
-
-    useEffect(() => {
-        fetchMovies();
-    }, []);
-
-    let body;
-
-    if (errors) {
-        body = <h1>{errors}</h1>;
-    }
-
-    if (!movies.length) {
-        body = <h1>Loading...</h1>;
-    } else {
-        body = (
-            <div className="grid grid-cols-3 gap-4">
-                {movies.map((movie) => (
-                    <Movie key={movie.name} {...movie} />
-                ))}
-            </div>
-        );
-    }
-
-    return <div className="container mx-auto">{body}</div>;
+    return (
+        <Router>
+            <Switch>
+                <Route path="/">
+                    <Movies />
+                </Route>
+            </Switch>
+        </Router>
+    );
 };
 
 export default App;

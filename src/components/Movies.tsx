@@ -23,6 +23,7 @@ const Movies: React.FC<MoviesProps> = ({ setFetchedMovies }) => {
 
     useEffect(() => {
         setMovies([]);
+        setErrors("");
         if (Object.keys(query).length > 0) {
             fetchMovies()
                 .then((moviesData) => {

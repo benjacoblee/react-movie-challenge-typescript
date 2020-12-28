@@ -47,9 +47,9 @@ const MovieDetail: React.FC<MovieDetailProps> = ({
     if (!movie) {
         body = (
             <Alert
-                iconBackgroundColor="bg-blue-600"
-                backgroundColor="bg-blue-200"
-                color="text-blue-600"
+                iconBackgroundColor="bg-green-600"
+                backgroundColor="bg-green-200"
+                color="text-green-600"
                 text="Loading, please wait.."
             />
         );

@@ -28,7 +28,7 @@ const Alert: React.FC<AlertProps> = ({
             </div>
             <div className="flex justify-between items-center w-full">
                 <div>
-                    <p className={`mb-2 font-bold ${color}`}>{text}</p>
+                    <p className={`font-bold ${color}`}>{text}</p>
                 </div>
             </div>
         </div>
